@@ -1,5 +1,12 @@
 package ru.otus.bbpax.model;
 
+import ru.otus.bbpax.model.result.ActionResult;
+import ru.otus.bbpax.model.result.NameResult;
+import ru.otus.bbpax.model.result.QuestionResult;
+import ru.otus.bbpax.service.Exam;
+
+import java.util.Objects;
+
 /**
  * @author Vlad Rakhlinskii
  * Created on 10.12.2018.
@@ -7,22 +14,38 @@ package ru.otus.bbpax.model;
 public class Examinee {
     private String name;
     private String surname;
+    private int questionsCount;
+    private int correctCount;
 
-    public Examinee setName(String name) {
-        this.name = name;
-        return this;
+    public Examinee() {
+        this.correctCount = 0;
+        this.questionsCount = 0;
+
     }
 
-    public String getName() {
-        return name;
+    public void applyResult(ActionResult result) {
+        if (result instanceof NameResult) {
+            applyResult(((NameResult) result));
+        } else if (result instanceof QuestionResult) {
+            applyResult(((QuestionResult) result));
+        }
     }
 
-    public Examinee setSurname(String surname) {
-        this.surname = surname;
-        return this;
+    private void applyResult(NameResult result) {
+        this.name = result.getName();
+        this.surname = result.getSurname();
     }
 
-    public String getSurname() {
-        return surname;
+    private void applyResult(QuestionResult result) {
+        if(result.wasSuccess()) {
+            correctCount++;
+        }
+        questionsCount++;
+    }
+
+    public String getResults() {
+        return "Dear, " + name + " " + surname + ".\n" +
+                "Your result is: " +
+                Objects.toString(100 * correctCount / questionsCount) + "%";
     }
 }
