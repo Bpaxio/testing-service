@@ -23,8 +23,7 @@ public class QuestionAction implements DialogAction<QuestionResult> {
         String answer = adapter.getInput();
 
         if (question.isCorrect(answer)) {
-            result.success();
-            return result;
+            return result.success();
         } else if (!question.possibleAnswer(answer)) {
             return repeatQuestion();
         }
@@ -34,12 +33,6 @@ public class QuestionAction implements DialogAction<QuestionResult> {
     private QuestionResult repeatQuestion() {
         adapter.sendMessage("Please enter one of represented answers");
         return run();
-    }
-
-
-    private boolean validateAnswer(String answer) {
-
-        return false;
     }
 
     @Override

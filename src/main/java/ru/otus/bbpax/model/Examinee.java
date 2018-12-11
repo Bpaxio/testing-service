@@ -20,7 +20,6 @@ public class Examinee {
     public Examinee() {
         this.correctCount = 0;
         this.questionsCount = 0;
-
     }
 
     public void applyResult(ActionResult result) {

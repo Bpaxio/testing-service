@@ -1,8 +1,8 @@
 package ru.otus.bbpax.model.result;
 
 public class NameResult implements ActionResult {
-    String name;
-    String surname;
+    private String name;
+    private String surname;
 
     public String getSurname() {
         return surname;

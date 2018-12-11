@@ -2,7 +2,6 @@ package ru.otus.bbpax.service;
 
 import ru.otus.bbpax.model.Examinee;
 import ru.otus.bbpax.model.action.DialogAction;
-import ru.otus.bbpax.model.action.EnterNameAction;
 import ru.otus.bbpax.service.action.ActionLoader;
 
 import java.util.List;
@@ -10,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class Exam implements ActionRunner {
     private final ConsoleAdapter adapter;
+    private List<ActionLoader> actionLoaders;
 
     private List<DialogAction> actions;
-    private List<ActionLoader> actionLoaders;
 
     public Exam(ConsoleAdapter adapter) {
         this.adapter = adapter;
