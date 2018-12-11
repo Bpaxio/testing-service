@@ -21,17 +21,26 @@ public class QuestionImpl implements Question {
     public String getPresentableView() {
         StringBuffer sb = new StringBuffer();
         sb.append(title).append("\n");
+        // TODO: 2018-12-11 add answer variant, like a),b),c)... or 1),2),3)...
         answers.forEach(s -> sb.append(s).append("    "));
         return sb.toString();
     }
 
     @Override
     public boolean isCorrect(Integer answer) {
-        return Objects.equals(correct, answer);
+        if (answer >= answers.size()) {
+            return false;
+        }
+        return isCorrect(answers.get(answer));
     }
 
     @Override
     public boolean isCorrect(String answer) {
-        return Objects.equals(answers.get(correct), answer);
+        return answers.get(correct).equalsIgnoreCase(answer);
+    }
+
+    @Override
+    public boolean possibleAnswer(String answer) {
+        return answers.stream().anyMatch(s -> s.equalsIgnoreCase(answer));
     }
 }

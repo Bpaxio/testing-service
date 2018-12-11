@@ -19,8 +19,8 @@ public class QuestionCsvLoader implements QuestionLoader<Question> {
             .getResource("fileWithCommaInValues.csv").getPath();
 
     @Override
-    public Question getQuestionById(long id) {
-        return null;
+    public Question getQuestionById(int id) {
+        return getQuestions().get(id);
     }
 
     @Override

@@ -8,7 +8,7 @@
     <util:constant id="in" static-field="java.lang.System.in" />
     <util:constant id="out" static-field="java.lang.System.out" />
     <bean id="questionLoader" class="ru.otus.bbpax.service.QuestionCsvLoader"/>
-    <bean id="consoleController" class="ru.otus.bbpax.service.ConsoleController">
+    <bean id="consoleController" class="ru.otus.bbpax.service.ConsoleAdapter">
         <constructor-arg ref="in"/>
     </bean>
 </beans>

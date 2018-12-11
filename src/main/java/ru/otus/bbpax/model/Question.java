@@ -7,4 +7,6 @@ public interface Question {
     boolean isCorrect(Integer answer);
 
     boolean isCorrect(String answer);
+
+    boolean possibleAnswer(String answer);
 }
