@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:constant id="in" static-field="java.lang.System.in" />
+    <util:constant id="out" static-field="java.lang.System.out" />
+    <bean id="consoleAdapter" class="ru.otus.bbpax.service.ConsoleAdapter">
+        <constructor-arg ref="in"/>
+        <constructor-arg ref="out"/>
+    </bean>
+
+    <bean id="questionLoader" class="ru.otus.bbpax.service.QuestionCsvLoader">
+        <property name="delimiter" value='","'/>
+        <property name="csvFilePath" value="fileWithCommaInValues.csv"/>
+    </bean>
+
+    <bean id="questionActionLoader" class="ru.otus.bbpax.service.action.QuestionActionLoader">
+        <constructor-arg ref="consoleAdapter"/>
+        <constructor-arg ref="questionLoader"/>
+    </bean>
+    <bean id="introActionLoader" class="ru.otus.bbpax.service.action.IntroActionLoader">
+        <constructor-arg ref="consoleAdapter"/>
+    </bean>
+
+    <bean id="actionRunner" class="ru.otus.bbpax.service.Exam">
+        <constructor-arg ref="consoleAdapter"/>
+        <property name="actionLoaders">
+            <list value-type="ru.otus.bbpax.service.action.ActionLoader">
+                <ref bean="introActionLoader"/>
+                <ref bean="questionActionLoader"/>
+            </list>
+        </property>
+    </bean>
+</beans>
