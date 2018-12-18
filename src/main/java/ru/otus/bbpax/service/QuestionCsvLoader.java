@@ -1,8 +1,12 @@
 package ru.otus.bbpax.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 import ru.otus.bbpax.model.Question;
 import ru.otus.bbpax.model.QuestionImpl;
 import ru.otus.bbpax.service.exception.QuestionMissedException;
+import ru.otus.bbpax.service.exception.QuestionParsingException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,15 +16,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class QuestionCsvLoader implements QuestionLoader<Question> {
 
     private String delimiter;
     private String csvFilePath;
 
+    @Value("${csv.delimiter:\",\"}")
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
     }
 
+    @Value("${csv.path:file.csv}")
     public void setCsvFilePath(String csvFilePath) {
         this.csvFilePath = csvFilePath;
     }
@@ -40,26 +47,32 @@ public class QuestionCsvLoader implements QuestionLoader<Question> {
             return br.lines()
                     .map(this::parseQuestion)
                     .collect(Collectors.toList());
-        } catch (IOException | NullPointerException e) {
-            throw new QuestionMissedException(e.toString());
+        } catch (IOException e) {
+            throw new QuestionMissedException("Reading the CSV file was interrupted. ", e);
+        } catch (NullPointerException e) {
+            throw new QuestionMissedException("CSV File is missing. ", e);
         }
     }
 
     /**
-     * if missed quotes -> fail
+     * if missed quotes, not parsable file -> fail
      * first is question, second one is index of the correct answers, others are answers.
      * @param line line
      * @return question, defined in line
      */
     private Question parseQuestion(String line) {
-        String[] elements = unquotedString(line).split(delimiter);
-        String title = elements[0];
-        Integer correct = Integer.parseInt(elements[1]);
-        return new QuestionImpl(
-                title,
-                Arrays.asList(elements)
-                        .subList(2, elements.length),
-                correct);
+        try {
+            String[] elements = unquotedString(line).split(delimiter);
+            String title = elements[0];
+            Integer correct = Integer.parseInt(elements[1]);
+            return new QuestionImpl(
+                    title,
+                    Arrays.asList(elements)
+                            .subList(2, elements.length),
+                    correct);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new QuestionParsingException(e);
+        }
     }
 
     public static String unquotedString(String string) {

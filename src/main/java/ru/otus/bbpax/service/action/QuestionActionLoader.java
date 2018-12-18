@@ -1,5 +1,7 @@
 package ru.otus.bbpax.service.action;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.otus.bbpax.model.Question;
 import ru.otus.bbpax.model.action.DialogAction;
 import ru.otus.bbpax.model.action.QuestionAction;
@@ -14,10 +16,12 @@ import java.util.stream.Collectors;
  * @author Vlad Rakhlinskii
  * Created on 11.12.2018.
  */
+@Component
 public class QuestionActionLoader implements ActionLoader {
     private final ConsoleAdapter adapter;
     private final QuestionLoader<Question> questionLoader;
 
+    @Autowired
     public QuestionActionLoader(ConsoleAdapter adapter, QuestionLoader<Question> questionLoader) {
         this.adapter = adapter;
         this.questionLoader = questionLoader;
