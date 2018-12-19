@@ -1,7 +1,9 @@
 package ru.otus.bbpax.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 import ru.otus.bbpax.model.Question;
 import ru.otus.bbpax.model.QuestionImpl;
@@ -14,13 +16,21 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
 public class QuestionCsvLoader implements QuestionLoader<Question> {
 
+    private final MessageSource messageSource;
+
     private String delimiter;
     private String csvFilePath;
+
+    @Autowired
+    public QuestionCsvLoader(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Value("${csv.delimiter:\",\"}")
     public void setDelimiter(String delimiter) {
@@ -66,11 +76,14 @@ public class QuestionCsvLoader implements QuestionLoader<Question> {
             String title = elements[0];
             Integer correct = Integer.parseInt(elements[1]);
             return new QuestionImpl(
-                    title,
+                    messageSource.getMessage(title, null, Locale.getDefault()),
                     Arrays.asList(elements)
-                            .subList(2, elements.length),
+                            .subList(2, elements.length)
+                            .stream()
+                            .map(s -> messageSource.getMessage(s, null, Locale.getDefault()))
+                            .collect(Collectors.toList()),
                     correct);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | NoSuchMessageException e) {
             throw new QuestionParsingException(e);
         }
     }

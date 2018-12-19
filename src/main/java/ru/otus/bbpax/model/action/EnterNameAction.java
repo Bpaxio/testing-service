@@ -18,12 +18,11 @@ public class EnterNameAction implements DialogAction<NameResult> {
     }
 
     public NameResult run() {
-        adapter.sendMessage("Enter your name.");
+        adapter.sendLocalizedMessage("intro.name");
         result.setName(adapter.getInput());
-        adapter.sendMessage("Enter your surname.");
+        adapter.sendLocalizedMessage("intro.surname");
         result.setSurname(adapter.getInput());
-        adapter.sendMessage("Now you are going to pass the test. "
-                + "Choose correct answer, put it down and type 'Enter'.");
+        adapter.sendLocalizedMessage("intro.info");
         return result;
     }
 

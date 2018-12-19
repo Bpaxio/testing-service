@@ -28,19 +28,32 @@ public class QuestionImpl implements Question {
 
     @Override
     public boolean isCorrect(Integer answer) {
-        if (answer >= answers.size()) {
-            return false;
-        }
-        return isCorrect(answers.get(answer));
+        return correct.equals(answer - 1);
     }
 
     @Override
     public boolean isCorrect(String answer) {
-        return answers.get(correct).equalsIgnoreCase(answer);
+        return answers.get(correct).equalsIgnoreCase(answer)
+                || possibleIntegerAnswer(answer)
+                && isCorrect(Integer.parseInt(answer));
     }
 
     @Override
     public boolean possibleAnswer(String answer) {
-        return answers.stream().anyMatch(s -> s.equalsIgnoreCase(answer));
+        boolean canBeInt = possibleIntegerAnswer(answer);
+        return answers.stream().anyMatch(s -> s.equalsIgnoreCase(answer)) || canBeInt;
+    }
+
+    boolean possibleIntegerAnswer(String answer) {
+        try {
+            int intAnswer = Integer.parseInt(answer);
+            return possibleAnswer(intAnswer);
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+    }
+
+    boolean possibleAnswer(Integer answer) {
+        return Objects.nonNull(answer) && answer > 0 && answer <= answers.size();
     }
 }

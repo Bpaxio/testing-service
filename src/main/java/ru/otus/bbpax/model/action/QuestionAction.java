@@ -22,16 +22,17 @@ public class QuestionAction implements DialogAction<QuestionResult> {
 
         String answer = adapter.getInput();
 
-        if (question.isCorrect(answer)) {
-            return result.success();
-        } else if (!question.possibleAnswer(answer)) {
+        if (question.possibleAnswer(answer)) {
+            if (question.isCorrect(answer))
+                return result.success();
+        } else {
             return repeatQuestion();
         }
         return result;
     }
 
     private QuestionResult repeatQuestion() {
-        adapter.sendMessage("Please enter one of represented answers");
+        adapter.sendLocalizedMessage("question.repeat");
         return run();
     }
 
