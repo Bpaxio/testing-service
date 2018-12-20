@@ -39,6 +39,12 @@ public class Exam implements ActionRunner {
         actions.stream()
                 .map(DialogAction::run)
                 .forEach(examinee::applyResult);
-        adapter.sendMessage(examinee.getResults());
+        adapter.sendLocalizedMessage(
+                "test.result",
+                examinee.getName(),
+                examinee.getSurname(),
+                examinee.getScore()
+        );
+//        adapter.sendMessage(examinee.getResults());
     }
 }

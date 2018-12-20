@@ -39,6 +39,18 @@ public class Examinee {
         questionsCount++;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Integer getScore() {
+        return 100 * correctCount / questionsCount;
+    }
+
     public String getResults() {
         return "Dear, " + name + " " + surname + ".\n" +
                 "Your result is: " +
