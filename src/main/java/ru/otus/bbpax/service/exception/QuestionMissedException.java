@@ -5,7 +5,13 @@ package ru.otus.bbpax.service.exception;
  * Created on 11.12.2018.
  */
 public class QuestionMissedException extends RuntimeException {
-    public QuestionMissedException(String s) {
-        super("Questions are missed, because of " + s);
+    private final static String MESSAGE = "Questions are missed. ";
+
+    public QuestionMissedException(String message, Throwable cause) {
+        super(MESSAGE + message, cause);
+    }
+
+    public QuestionMissedException(Throwable cause) {
+        super(MESSAGE, cause);
     }
 }

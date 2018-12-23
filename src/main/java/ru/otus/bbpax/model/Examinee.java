@@ -3,9 +3,6 @@ package ru.otus.bbpax.model;
 import ru.otus.bbpax.model.result.ActionResult;
 import ru.otus.bbpax.model.result.NameResult;
 import ru.otus.bbpax.model.result.QuestionResult;
-import ru.otus.bbpax.service.Exam;
-
-import java.util.Objects;
 
 /**
  * @author Vlad Rakhlinskii
@@ -42,9 +39,21 @@ public class Examinee {
         questionsCount++;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Integer getScore() {
+        return 100 * correctCount / questionsCount;
+    }
+
     public String getResults() {
         return "Dear, " + name + " " + surname + ".\n" +
                 "Your result is: " +
-                Objects.toString(100 * correctCount / questionsCount) + "%";
+                100 * correctCount / questionsCount + "%";
     }
 }
