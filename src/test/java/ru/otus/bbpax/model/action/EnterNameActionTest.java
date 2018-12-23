@@ -61,10 +61,9 @@ class EnterNameActionTest {
     @Test
     @DisplayName("умеет бегать")
     void runTest() {
-        action.run();
-        verify(adapter, times(2)).getInput();
-        verify(adapter, times(3)).sendLocalizedMessage(anyString());
-        verify(adapter, times(0)).sendMessage(anyString());
+        NameResult result = action.run();
+        assertEquals(NAME, result.getName());
+        assertEquals(SURNAME, result.getSurname());
         verify(action, times(1)).run();
         verify(action, times(0)).getResult();
     }

@@ -15,9 +15,7 @@ public class SpringApplication {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext();
-        context.register(SpringApplication.class);
-        context.refresh();
+                new AnnotationConfigApplicationContext(SpringApplication.class);
 
         ActionRunner exam = context.getBean(ActionRunner.class);
         exam.setUp();

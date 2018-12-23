@@ -87,9 +87,8 @@ class QuestionActionTest {
 
         run = action.run();
         assertTrue(run.wasSuccess());
-        verify(adapter, times(3)).sendMessage(anyString());
-        verify(adapter, times(1)).sendLocalizedMessage(anyString());
-        verify(adapter, times(3)).getInput();
+
+        verify(action, times(0)).getResult();
         verify(action, times(3)).run();
     }
 
@@ -97,5 +96,7 @@ class QuestionActionTest {
     void getResult() {
         QuestionResult run = action.run();
         assertEquals(run, action.getResult());
+        verify(action, times(1)).getResult();
+        verify(action, times(2)).run();
     }
 }
