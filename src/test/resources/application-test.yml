@@ -1,0 +1,13 @@
+csv:
+  delimiter: \",\"
+  path: localizedQuestions.csv
+spring:
+  banner:
+    charset: UTF-8
+    image:
+      location: banner/logo.jpg
+      width: 40
+      height: 20
+      margin: 25
+
+logging.level.org.springframework.test.context.cache: debug
