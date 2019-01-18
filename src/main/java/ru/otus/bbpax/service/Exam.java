@@ -34,17 +34,16 @@ public class Exam implements ActionRunner {
     }
 
     @Override
-    public void run() {
+    public String run() {
         Examinee examinee = new Examinee();
         actions.stream()
                 .map(DialogAction::run)
                 .forEach(examinee::applyResult);
-        adapter.sendLocalizedMessage(
+        return adapter.getLocalizedMessage(
                 "test.result",
                 examinee.getName(),
                 examinee.getSurname(),
                 examinee.getScore()
         );
-//        adapter.sendMessage(examinee.getResults());
     }
 }

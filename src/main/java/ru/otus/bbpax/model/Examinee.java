@@ -19,24 +19,12 @@ public class Examinee {
         this.questionsCount = 0;
     }
 
-    public void applyResult(ActionResult result) {
-        if (result instanceof NameResult) {
-            applyResult(((NameResult) result));
-        } else if (result instanceof QuestionResult) {
-            applyResult(((QuestionResult) result));
-        }
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private void applyResult(NameResult result) {
-        this.name = result.getName();
-        this.surname = result.getSurname();
-    }
-
-    private void applyResult(QuestionResult result) {
-        if(result.wasSuccess()) {
-            correctCount++;
-        }
-        questionsCount++;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getName() {
@@ -47,6 +35,23 @@ public class Examinee {
         return surname;
     }
 
+    public void applyResult(ActionResult result) {
+        result.applyResultTo(this);
+    }
+
+
+    public Examinee answered() {
+        questionsCount++;
+        return this;
+    }
+
+    public void correct() {
+        correctCount++;
+    }
+
+    public void wrong() {
+    }
+
     public Integer getScore() {
         return 100 * correctCount / questionsCount;
     }
@@ -54,6 +59,6 @@ public class Examinee {
     public String getResults() {
         return "Dear, " + name + " " + surname + ".\n" +
                 "Your result is: " +
-                100 * correctCount / questionsCount + "%";
+                getScore() + "%";
     }
 }

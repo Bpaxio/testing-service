@@ -1,7 +1,8 @@
 package ru.otus.bbpax.service.action;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,11 +22,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//@Ignore
 @DisplayName("EN action")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-class QuestionActionLoaderTest {
+public class QuestionActionLoaderTest {
 
     @MockBean
     private ConsoleAdapter adapter;
@@ -35,7 +37,7 @@ class QuestionActionLoaderTest {
 
 
     @Test
-    void loadActions() {
+    public void loadActions() {
         assertThat(loader.loadActions())
                 .isNotNull()
                 .isNotEmpty()

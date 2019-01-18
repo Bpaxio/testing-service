@@ -1,5 +1,7 @@
 package ru.otus.bbpax.model.result;
 
+import ru.otus.bbpax.model.Examinee;
+
 public class NameResult implements ActionResult {
     private String name;
     private String surname;
@@ -23,5 +25,11 @@ public class NameResult implements ActionResult {
     @Override
     public String getPresentableView() {
         return name + "   " + surname;
+    }
+
+    @Override
+    public <T extends Examinee> void applyResultTo(T person) {
+        person.setName(getName());
+        person.setSurname(getSurname());
     }
 }
