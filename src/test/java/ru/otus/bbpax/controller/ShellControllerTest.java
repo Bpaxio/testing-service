@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.bbpax.service.Exam;
@@ -27,6 +28,7 @@ class ShellControllerTest {
     private Exam exam;
 
     @Test
+    @DirtiesContext
     void hello() {
         String expectedName = "Name";
         String result = controller.hello(expectedName);
@@ -40,7 +42,13 @@ class ShellControllerTest {
         assertEquals(testResultMessage, controller.startTest());
     }
 
+    @Test
+    void startTestAvailability() {
+        assertFalse(controller.startTestAvailability().isAvailable());
 
+        controller.hello("anyName");
+        assertTrue(controller.startTestAvailability().isAvailable());
+    }
 
     @Configuration
     @Import(ShellController.class)
