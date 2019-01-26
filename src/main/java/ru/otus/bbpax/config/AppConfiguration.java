@@ -33,12 +33,12 @@ public class AppConfiguration {
         return ms;
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            ActionRunner exam = ctx.getBean(ActionRunner.class);
-            exam.setUp();
-            exam.run();
-        };
-    }
+//    @Bean
+//    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+//        return args -> {
+//            ActionRunner exam = ctx.getBean(ActionRunner.class);
+//            exam.setUp();
+//            exam.run();
+//        };
+//    }
 }

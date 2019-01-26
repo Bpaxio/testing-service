@@ -41,19 +41,26 @@ public class ConsoleAdapter {
     }
 
     public void sendLocalizedMessage(String messageCode) {
-        sendLocalizedMessage(messageCode, null);
+        System.out.println(getLocalizedMessage(messageCode));
     }
 
     public void sendLocalizedMessage(String messageCode, Object... args) {
-        try {
-            String message = messageSource.getMessage(messageCode, args, Locale.getDefault());
-            System.out.println(message);
-        } catch (NoSuchMessageException e) {
-            System.out.println(messageCode);
-        }
+        System.out.println(getLocalizedMessage(messageCode, args));
     }
 
     public void sendMessage(String message) {
         System.out.println(message);
+    }
+
+    public String getLocalizedMessage(String messageCode) {
+        return getLocalizedMessage(messageCode, ((Object) null));
+    }
+
+    public String getLocalizedMessage(String messageCode, Object... args) {
+        try {
+            return messageSource.getMessage(messageCode, args, Locale.getDefault());
+        } catch (NoSuchMessageException e) {
+            return messageCode;
+        }
     }
 }

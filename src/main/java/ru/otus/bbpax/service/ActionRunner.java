@@ -6,5 +6,5 @@ package ru.otus.bbpax.service;
  */
 public interface ActionRunner {
     void setUp();
-    void run();
+    String run();
 }

@@ -1,9 +1,8 @@
 package ru.otus.bbpax.service.action;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Ignore;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-class IntroActionLoaderTest {
+public class IntroActionLoaderTest {
 
     @Autowired
     private IntroActionLoader loader;
@@ -30,7 +29,7 @@ class IntroActionLoaderTest {
     private ConsoleAdapter adapter;
 
     @Test
-    void loadActions() {
+    public void loadActions() {
         assertThat(loader.loadActions())
                 .isNotNull()
                 .isNotEmpty()

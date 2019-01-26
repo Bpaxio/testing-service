@@ -1,5 +1,6 @@
 package ru.otus.bbpax.service.action;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import ru.otus.bbpax.model.action.DialogAction;
 import ru.otus.bbpax.model.action.EnterNameAction;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Vlad Rakhlinskii
  * Created on 11.12.2018.
  */
+@Order(10)
 @Component
 public class IntroActionLoader implements ActionLoader {
     private final ConsoleAdapter adapter;
